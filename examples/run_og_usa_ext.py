@@ -20,12 +20,12 @@ style_file_url = (
 plt.style.use(style_file_url)
 
 
-def main(rho_G = None):
+def main(rho_G = None, g_y_annual = None):
 
-    example_dir = "TCJA<>rho_G<>" + str(rho_G)
+    example_dir = "TCJA<>rho_G<>" + str(rho_G) + "<>g_y_annual<>" + str(g_y_annual)
 
     # Define parameters to use for multiprocessing
-    num_workers = min(multiprocessing.cpu_count(), 7)
+    num_workers = min(multiprocessing.cpu_count(), 5)
     client = Client(n_workers=num_workers, threads_per_worker=1)
     print("Number of workers = ", num_workers)
 
@@ -75,6 +75,8 @@ def main(rho_G = None):
     }
     if rho_G is not None:
         updated_params["rho_G"] = rho_G
+    if g_y_annual is not None:
+        updated_params["g_y_annual"] = g_y_annual
     p.update_specifications(updated_params)
 
     # Run model
@@ -138,6 +140,8 @@ def main(rho_G = None):
     }
     if rho_G is not None:
         updated_params["rho_G"] = rho_G
+    if g_y_annual is not None:
+        updated_params["g_y_annual"] = g_y_annual
     p2.update_specifications(updated_params)
 
     # Run model
@@ -201,6 +205,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--rho_G", help="Budget closure rule smoothing parameter")
+    parser.add_argument("--g_y_annual", help="Growth rate of labor augmenting technological progress")
     args = parser.parse_args()
 
-    main(args.rho_G)
+    main(args.rho_G, args.g_y_annual)
