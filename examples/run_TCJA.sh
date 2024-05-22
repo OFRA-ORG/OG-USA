@@ -1,12 +1,13 @@
-# python run_og_usa_ext.py
-# python run_og_usa_ext.py --rho_G=0.2
-python run_og_usa_ext.py --rho_G=0.3
-python run_og_usa_ext.py --rho_G=0.4
-
-for i in `seq i 0.1 0.1 0.4`
+for frisch in `seq 0.3 0.1 0.5`
 do
-	for j in `seq j 0.025 0.005 0.35`
+	for zeta_D in `seq 0.2 0.2 0.6`
 	do
-		python run_og_usa_ext.py --rho_G=$i --g_y_annual=$j
+		for g_y_annual in `seq 0.02 0.01 0.04`
+		do
+			for tG1 in `seq 10 20 30`
+			do
+				python run_og_usa_ext.py --frisch=$frisch --zeta_D=$zeta_D --g_y_annual=$g_y_annual --tG1=$tG1
+			done
+		done
 	done
 done

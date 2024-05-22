@@ -20,9 +20,12 @@ style_file_url = (
 plt.style.use(style_file_url)
 
 
-def main(rho_G = None, g_y_annual = None):
+def main(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None):
 
-    example_dir = "TCJA<>rho_G<>" + str(rho_G) + "<>g_y_annual<>" + str(g_y_annual)
+    example_dir = "TCJA<>frisch<>" + str(frisch) +
+                  "<>zeta_D<>" + str(zeta_D) +
+                  "<>g_y_annual<>" + str(g_y_annual) +
+                  "<>tG1<>" + str(tG1)
 
     # Define parameters to use for multiprocessing
     num_workers = min(multiprocessing.cpu_count(), 5)
@@ -73,10 +76,14 @@ def main(rho_G = None, g_y_annual = None):
         "mean_income_data": d["mean_income_data"],
         "frac_tax_payroll": d["frac_tax_payroll"],
     }
-    if rho_G is not None:
-        updated_params["rho_G"] = rho_G
+    if frisch is not None:
+        updated_params["frisch"] = frisch
+    if zeta_D is not None:
+        updated_params["zeta_D"] = [zeta_D]
     if g_y_annual is not None:
         updated_params["g_y_annual"] = g_y_annual
+    if tG1 is not None:
+        updated_params["tG1"] = tG1
     p.update_specifications(updated_params)
 
     # Run model
@@ -138,10 +145,14 @@ def main(rho_G = None, g_y_annual = None):
         "mean_income_data": d["mean_income_data"],
         "frac_tax_payroll": d["frac_tax_payroll"],
     }
-    if rho_G is not None:
-        updated_params["rho_G"] = rho_G
+    if frisch is not None:
+        updated_params["frisch"] = frisch
+    if zeta_D is not None:
+        updated_params["zeta_D"] = [zeta_D]
     if g_y_annual is not None:
         updated_params["g_y_annual"] = g_y_annual
+    if tG1 is not None:
+        updated_params["tG1"] = tG1
     p2.update_specifications(updated_params)
 
     # Run model
@@ -204,8 +215,10 @@ def main(rho_G = None, g_y_annual = None):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--rho_G", help="Budget closure rule smoothing parameter")
+    parser.add_argument("--frisch", help="Frisch elasticity of labor supply")
+    parser.add_argument("--zeta_D", help="Share of new debt issues purchased by foreigners")
     parser.add_argument("--g_y_annual", help="Growth rate of labor augmenting technological progress")
+    parser.add_argument("--tG1", help="Model period in which budget closure rule starts")
     args = parser.parse_args()
 
-    main(args.rho_G, args.g_y_annual)
+    main(args.frisch, args.zeta_D, args.g_y_annual, args.tG1)
