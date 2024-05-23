@@ -22,9 +22,9 @@ plt.style.use(style_file_url)
 
 def main(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None):
 
-    example_dir = "TCJA<>frisch<>" + str(frisch) +
-                  "<>zeta_D<>" + str(zeta_D) +
-                  "<>g_y_annual<>" + str(g_y_annual) +
+    example_dir = "TCJA<>frisch<>" + str(frisch) + \
+                  "<>zeta_D<>" + str(zeta_D) + \
+                  "<>g_y_annual<>" + str(g_y_annual) + \
                   "<>tG1<>" + str(tG1)
 
     # Define parameters to use for multiprocessing

@@ -41,7 +41,9 @@ envs/
 docs/book/_build/*
 docs/build*
 *micro_data_*.pkl
-examples/TCJA*
+examples/TCJA*/**/micro_data_baseline.pkl
+examples/TCJA*/**/micro_data_policy.pkl
+examples/TCJA*/**/model_params.pkl
 cs-config/cs_config/OUTPUT_BASELINE/*
 data/csv_output_files/*
 data/images/*
