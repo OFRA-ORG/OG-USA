@@ -34,7 +34,7 @@
 # 	done
 # done
 
-python run_og_usa_ext.py --frisch=0.3 --zeta_D=0.2 --g_y_annual=0.02
+# python run_og_usa_ext.py --frisch=0.3 --zeta_D=0.2 --g_y_annual=0.02
 python run_og_usa_ext.py --frisch=0.3 --zeta_D=0.6 --g_y_annual=0.02
 python run_og_usa_ext.py --frisch=0.4 --zeta_D=0.2 --g_y_annual=0.02
 python run_og_usa_ext.py --frisch=0.4 --zeta_D=0.6 --g_y_annual=0.02
