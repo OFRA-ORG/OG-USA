@@ -1,8 +1,8 @@
-for frisch in `seq 0.3 0.1 0.5`
+for frisch in `seq 0.5 -0.1 0.3`
 do
-	for zeta_D in `seq 0.2 0.2 0.6`
+	for zeta_D in `seq 0.6 -0.2 0.2`
 	do
-		for g_y_annual in `seq 0.02 0.01 0.04`
+		for g_y_annual in `seq 0.04 -0.01 0.02`
 		do
 			# for tG1 in `seq 10 10 30`
 			# do
