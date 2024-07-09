@@ -70,7 +70,7 @@ def main(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None):
     # # additional parameters to change
     updated_params = {
         "start_year": 2026,
-        "RC_TPI": 20*1e-5,
+        "RC_TPI": 100*1e-5,
         "etr_params": d["etr_params"],
         "mtrx_params": d["mtrx_params"],
         "mtry_params": d["mtry_params"],
@@ -140,7 +140,7 @@ def main(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None):
     # # additional parameters to change
     updated_params = {
         "start_year": 2026,
-        "RC_TPI": 20*1e-5,
+        "RC_TPI": 100*1e-5,
         "etr_params": d["etr_params"],
         "mtrx_params": d["mtrx_params"],
         "mtry_params": d["mtry_params"],
