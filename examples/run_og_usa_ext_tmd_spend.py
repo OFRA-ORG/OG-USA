@@ -165,7 +165,7 @@ def main_spend(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, spen
         if tG1 is not None:
             updated_params["tG1"] = tG1
         if spending_cut is not None:
-            updated_params["alpha_G"] = [(1-spending_cut)*0.011231117159158614]
+            updated_params["alpha_G"] = [(1-spending_cut)*0.011231117159158614, (1-spending_cut)*0.011231117159158614, (1-spending_cut)*0.011231117159158614, (1-spending_cut)*0.011231117159158614, 0.011231117159158614]
         p2.update_specifications(updated_params)
 
         # Run model
