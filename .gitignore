@@ -51,3 +51,5 @@ ogusa/csv_output_files/*
 ogusa/images/*
 .vscode/
 *default.profraw
+examples/**/OUTPUT_BASELINE
+examples/**/OUTPUT_REFORM
