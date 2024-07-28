@@ -20,13 +20,15 @@ style_file_url = (
 plt.style.use(style_file_url)
 
 
-def main_immig(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, immig_mil = None):
+def main_combo(frisch = None, zeta_D = None, g_y_annual_baseline = None, g_y_annual_reform = None, tG1 = None, immig_mil = None, spending_cut = None):
 
-    example_dir = "TCJA_TMD_immig##frisch##" + str(frisch) + \
+    example_dir = "TCJA_TMD_combo##frisch##" + str(frisch) + \
                   "##zeta_D##" + str(zeta_D) + \
-                  "##g_y_annual##" + str(g_y_annual) + \
+                  "##g_y_annual_baseline##" + str(g_y_annual_baseline) + \
+                  "##g_y_annual_reform##" + str(g_y_annual_reform) + \
                   "##tG1##" + str(tG1) + \
-                  "##immig_mil##" + str(immig_mil)
+                  "##immig_mil##" + str(immig_mil) + \
+                  "##spend##" + str(spending_cut)
 
     # Directories to save data
     CUR_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -85,13 +87,14 @@ def main_immig(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, immi
             "mtry_params": d["mtry_params"],
             "mean_income_data": d["mean_income_data"],
             "frac_tax_payroll": d["frac_tax_payroll"],
+            "ID_Charity_crt_cash": 0.6
         }
         if frisch is not None:
             updated_params["frisch"] = frisch
         if zeta_D is not None:
             updated_params["zeta_D"] = [zeta_D]
-        if g_y_annual is not None:
-            updated_params["g_y_annual"] = g_y_annual
+        if g_y_annual_baseline is not None:
+            updated_params["g_y_annual"] = g_y_annual_baseline
         if tG1 is not None:
             updated_params["tG1"] = tG1
         p.update_specifications(updated_params)
@@ -154,13 +157,14 @@ def main_immig(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, immi
             "mtry_params": d["mtry_params"],
             "mean_income_data": d["mean_income_data"],
             "frac_tax_payroll": d["frac_tax_payroll"],
+            "ID_Charity_crt_cash": 0.6
         }
         if frisch is not None:
             updated_params["frisch"] = frisch
         if zeta_D is not None:
             updated_params["zeta_D"] = [zeta_D]
-        if g_y_annual is not None:
-            updated_params["g_y_annual"] = g_y_annual
+        if g_y_annual_reform is not None:
+            updated_params["g_y_annual"] = g_y_annual_reform
         if tG1 is not None:
             updated_params["tG1"] = tG1
         if immig_mil is not None:
@@ -169,6 +173,8 @@ def main_immig(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, immi
                 updated_params["lambdas"] = [0.249251497, 0.249251497, 0.199401198, 0.099700599, 0.101197605, 0.091077844, 0.00505988, 0.004047904, 0.000910778, 0.000101198]
             else:
                 updated_params["lambdas"] = [0.248507463, 0.248507463, 0.19880597, 0.099402985, 0.10238806, 0.092149254, 0.005119403, 0.004095522, 0.000921493, 0.000102388]
+        if spending_cut is not None:
+            updated_params["alpha_G"] = [(1-spending_cut)*0.011231117159158614, (1-spending_cut)*0.011231117159158614, (1-spending_cut)*0.011231117159158614, (1-spending_cut)*0.011231117159158614, 0.011231117159158614]
         p2.update_specifications(updated_params)
 
         # Run model
@@ -233,9 +239,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--frisch", help="Frisch elasticity of labor supply")
     parser.add_argument("--zeta_D", help="Share of new debt issues purchased by foreigners")
-    parser.add_argument("--g_y_annual", help="Growth rate of labor augmenting technological progress")
+    parser.add_argument("--g_y_annual_baseline", help="Baseline growth rate of labor augmenting technological progress")
+    parser.add_argument("--g_y_annual_reform", help="Reform growth rate of labor augmenting technological progress")
     parser.add_argument("--tG1", help="Model period in which budget closure rule starts")
     parser.add_argument("--immig_mil", help="High-skilled immigrants (in millions) added to top groups")
+    parser.add_argument("--spending_cut", help="Spending cut (in percentage) compared to baseline")
     args = parser.parse_args()
 
-    main_immig(args.frisch, args.zeta_D, args.g_y_annual, args.tG1, args.immig_mil)
+    main_combo(args.frisch, args.zeta_D, args.g_y_annual_baseline, args.g_y_annual_reform, args.tG1, args.immig_mil, args.spending_cut)

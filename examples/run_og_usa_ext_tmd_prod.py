@@ -20,12 +20,11 @@ style_file_url = (
 plt.style.use(style_file_url)
 
 
-def main_prod(frisch = None, zeta_D = None, g_y_annual_baseline = None, g_y_annual_reform = None, tG1 = None):
+def main_prod(reform, frisch = None, zeta_D = None, Z = None, tG1 = None, skip_baseline = False, skip_reform = False):
 
     example_dir = "TCJA_TMD_prod##frisch##" + str(frisch) + \
                   "##zeta_D##" + str(zeta_D) + \
-                  "##g_y_annual_baseline##" + str(g_y_annual_baseline) + \
-                  "##g_y_annual_reform##" + str(g_y_annual_reform) + \
+                  "##Z##" + str(Z) + \
                   "##tG1##" + str(tG1)
 
     # Directories to save data
@@ -90,17 +89,19 @@ def main_prod(frisch = None, zeta_D = None, g_y_annual_baseline = None, g_y_annu
             updated_params["frisch"] = frisch
         if zeta_D is not None:
             updated_params["zeta_D"] = [zeta_D]
-        if g_y_annual_baseline is not None:
-            updated_params["g_y_annual"] = g_y_annual_baseline
+        # if Z is not None:
+        #     updated_params["Z"] = Z
         if tG1 is not None:
             updated_params["tG1"] = tG1
         p.update_specifications(updated_params)
 
-        # Run model
-        start_time = time.time()
-        runner(p, time_path=True, client=client)
-        print("run time = ", time.time() - start_time)
-
+        if not skip_baseline:
+            # Run model
+            start_time = time.time()
+            runner(p, time_path=True, client=client)
+            print("run time = ", time.time() - start_time)
+        else:
+            print('Skipped baseline sim')
         """
         ------------------------------------------------------------------------
         Run reform policy
@@ -109,11 +110,11 @@ def main_prod(frisch = None, zeta_D = None, g_y_annual_baseline = None, g_y_annu
         # Grab a reform JSON file already in Tax-Calculator
         # In this example the 'reform' is a change to 2017 law (the
         # baseline policy is tax law in 2018)
-        reform_url = (
-            "github://PSLmodels:Tax-Calculator@master/taxcalc/"
-            + "reforms/ext.json"
-        )
-        ref = Calculator.read_json_param_objects(reform_url, None)
+        # reform_url = (
+        #     "https://github.com/PSLmodels/Tax-Calculator/blob/f25548813d3b113a35e64b307b0af6b518d5996a/taxcalc/reforms/ext.json"
+        # )
+        # ref = Calculator.read_json_param_objects(reform_url, None)
+        ref = reform
         iit_reform = ref["policy"]
 
         # create new Specifications object for reform simulation
@@ -156,20 +157,25 @@ def main_prod(frisch = None, zeta_D = None, g_y_annual_baseline = None, g_y_annu
             "mean_income_data": d["mean_income_data"],
             "frac_tax_payroll": d["frac_tax_payroll"],
         }
+
+        updated_params["g_y_annual"] = 0.02
         if frisch is not None:
             updated_params["frisch"] = frisch
         if zeta_D is not None:
             updated_params["zeta_D"] = [zeta_D]
-        if g_y_annual_reform is not None:
-            updated_params["g_y_annual"] = g_y_annual_reform
+        if Z is not None:
+            updated_params["Z"] = [[Z], [Z**2], [Z**3], [Z**4], [Z**5], [Z**6], [Z**7], [Z**8], [Z**9], [Z**10], [1.0]]
         if tG1 is not None:
             updated_params["tG1"] = tG1
         p2.update_specifications(updated_params)
 
-        # Run model
-        start_time = time.time()
-        runner(p2, time_path=True, client=client)
-        print("run time = ", time.time() - start_time)
+        if not skip_reform:
+            # Run model
+            start_time = time.time()
+            runner(p2, time_path=True, client=client)
+            print("run time = ", time.time() - start_time)
+        else:
+            print('Skipped reform sim')
         client.close()
 
         """
@@ -228,9 +234,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--frisch", help="Frisch elasticity of labor supply")
     parser.add_argument("--zeta_D", help="Share of new debt issues purchased by foreigners")
-    parser.add_argument("--g_y_annual_baseline", help="Baseline growth rate of labor augmenting technological progress")
-    parser.add_argument("--g_y_annual_reform", help="Reform growth rate of labor augmenting technological progress")
+    parser.add_argument("--Z", help="Total factor productivity, with 1.01 representing 1 per cent growth rate")
     parser.add_argument("--tG1", help="Model period in which budget closure rule starts")
     args = parser.parse_args()
 
-    main_prod(args.frisch, args.zeta_D, args.g_y_annual_baseline, args.g_y_annual_reform, args.tG1)
+    main_prod(args.frisch, args.zeta_D, args.Z, args.tG1)
