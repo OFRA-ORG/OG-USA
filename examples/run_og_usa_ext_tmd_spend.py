@@ -20,7 +20,7 @@ style_file_url = (
 plt.style.use(style_file_url)
 
 
-def main_spend(reform, frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, spending_cut = None, skip_baseline = False):
+def main_spend(frisch = None, zeta_D = None, g_y_annual = None, tG1 = None, spending_cut = None, skip_baseline = False):
 
     example_dir = "TCJA_TMD_spend##frisch##" + str(frisch) + \
                   "##zeta_D##" + str(zeta_D) + \
@@ -112,11 +112,11 @@ def main_spend(reform, frisch = None, zeta_D = None, g_y_annual = None, tG1 = No
         # Grab a reform JSON file already in Tax-Calculator
         # In this example the 'reform' is a change to 2017 law (the
         # baseline policy is tax law in 2018)
-        # reform_url = (
-        #     "https://github.com/PSLmodels/Tax-Calculator/blob/f25548813d3b113a35e64b307b0af6b518d5996a/taxcalc/reforms/ext.json"
-        # )
-        # ref = Calculator.read_json_param_objects(reform_url, None)
-        ref = reform
+        reform_url = (
+            "github://PSLmodels:Tax-Calculator@master/taxcalc/"
+            + "reforms/ext.json"
+        )
+        ref = Calculator.read_json_param_objects(reform_url, None)
         iit_reform = ref["policy"]
 
         # create new Specifications object for reform simulation
@@ -231,7 +231,6 @@ def main_spend(reform, frisch = None, zeta_D = None, g_y_annual = None, tG1 = No
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--reform", help="Reform json object")
     parser.add_argument("--frisch", help="Frisch elasticity of labor supply")
     parser.add_argument("--zeta_D", help="Share of new debt issues purchased by foreigners")
     parser.add_argument("--g_y_annual", help="Growth rate of labor augmenting technological progress")
@@ -239,4 +238,4 @@ if __name__ == "__main__":
     parser.add_argument("--spending_cut", help="Spending cut (in percentage) compared to baseline")
     args = parser.parse_args()
 
-    main_spend(args.reform, args.frisch, args.zeta_D, args.g_y_annual, args.tG1, args.spending_cut)
+    main_spend(args.frisch, args.zeta_D, args.g_y_annual, args.tG1, args.spending_cut)

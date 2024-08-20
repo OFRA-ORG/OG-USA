@@ -113,7 +113,8 @@ def main_combo(frisch = None, zeta_D = None, g_y_annual_baseline = None, g_y_ann
         # In this example the 'reform' is a change to 2017 law (the
         # baseline policy is tax law in 2018)
         reform_url = (
-            "https://github.com/PSLmodels/Tax-Calculator/blob/f25548813d3b113a35e64b307b0af6b518d5996a/taxcalc/reforms/ext.json"
+            "github://PSLmodels:Tax-Calculator@master/taxcalc/"
+            + "reforms/ext.json"
         )
         ref = Calculator.read_json_param_objects(reform_url, None)
         iit_reform = ref["policy"]

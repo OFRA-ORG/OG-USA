@@ -20,7 +20,7 @@ style_file_url = (
 plt.style.use(style_file_url)
 
 
-def main_prod(reform, frisch = None, zeta_D = None, Z = None, tG1 = None, skip_baseline = False, skip_reform = False):
+def main_prod(frisch = None, zeta_D = None, Z = None, tG1 = None, skip_baseline = False, skip_reform = False):
 
     example_dir = "TCJA_TMD_prod##frisch##" + str(frisch) + \
                   "##zeta_D##" + str(zeta_D) + \
@@ -110,11 +110,11 @@ def main_prod(reform, frisch = None, zeta_D = None, Z = None, tG1 = None, skip_b
         # Grab a reform JSON file already in Tax-Calculator
         # In this example the 'reform' is a change to 2017 law (the
         # baseline policy is tax law in 2018)
-        # reform_url = (
-        #     "https://github.com/PSLmodels/Tax-Calculator/blob/f25548813d3b113a35e64b307b0af6b518d5996a/taxcalc/reforms/ext.json"
-        # )
-        # ref = Calculator.read_json_param_objects(reform_url, None)
-        ref = reform
+        reform_url = (
+            "github://PSLmodels:Tax-Calculator@master/taxcalc/"
+            + "reforms/ext.json"
+        )
+        ref = Calculator.read_json_param_objects(reform_url, None)
         iit_reform = ref["policy"]
 
         # create new Specifications object for reform simulation
