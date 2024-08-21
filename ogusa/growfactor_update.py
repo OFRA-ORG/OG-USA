@@ -43,7 +43,7 @@ def growth_rate_diff(base, reform):
     # shift index back one so year is the year of the growth rate
     growth_diff.index = growth_diff.index - 1
     # Drop index 2024
-    growth_diff = growth_diff.drop(2024)
+    # growth_diff = growth_diff.drop(2024)
     # And add the level shift in the 1st year
     growth_diff.iloc[0] += level_shift
 
