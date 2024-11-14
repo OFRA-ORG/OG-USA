@@ -20,10 +20,10 @@ def main(overwrite):
 
     base_dir = os.path.join(CUR_DIR, "Current_Law", "OUTPUT")
     # need to correct one base policy error
-    base_policy = {
-        "ALD_DomesticProduction_hc": {"2026": 1.00}
-    }
-    iit_baseline = base_policy
+    # base_policy = {
+    #     "ALD_DomesticProduction_hc": {"2026": 1.00}
+    # }
+    # iit_baseline = base_policy
 
     if os.path.exists(base_dir) and not overwrite:
         print('Already did ' + base_dir + '. Skip!')
@@ -35,7 +35,7 @@ def main(overwrite):
             print('Have not done ' + base_dir + ', and now doing...')
             
         # Define parameters to use for multiprocessing
-        num_workers = multiprocessing.cpu_count() - 1
+        num_workers = multiprocessing.cpu_count() - 2
         client = Client(n_workers=num_workers, threads_per_worker=1)
         print("Number of workers = ", num_workers)
 
@@ -60,7 +60,8 @@ def main(overwrite):
         p.tax_func_type = "GS"
         p.age_specific = False
         
-        c = Calibration(p, estimate_tax_functions=True, iit_baseline=iit_baseline, data='tmd', client=client)
+        # c = Calibration(p, estimate_tax_functions=True, iit_baseline=iit_baseline, data='tmd', client=client)
+        c = Calibration(p, estimate_tax_functions=True, data='tmd', client=client)
         d = c.get_dict()
         # # additional parameters to change
         updated_params = {

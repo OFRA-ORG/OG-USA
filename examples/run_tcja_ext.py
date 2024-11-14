@@ -20,16 +20,15 @@ def main(overwrite):
 
     base_dir = os.path.join(CUR_DIR, "Current_Law", "OUTPUT")
     # need to correct one base policy error
-    base_policy = {
-        "ALD_DomesticProduction_hc": {"2026": 1.00}
-    }
-    iit_baseline = base_policy
+    # base_policy = {
+    #     "ALD_DomesticProduction_hc": {"2026": 1.00}
+    # }
+    # iit_baseline = base_policy
 
     reform_dir = os.path.join(CUR_DIR, "TCJA_Ext", "OUTPUT")
     # Grab a reform JSON file already in Tax-Calculator
     reform_url = (
-        "github://PSLmodels:Tax-Calculator@master/taxcalc/"
-        + "reforms/ext.json"
+        "github://OFRA-ORG:Tax-Calculator-thru74@tcja/taxcalc/reforms/ext.json"
     )
     ref = Calculator.read_json_param_objects(reform_url, None)
     iit_reform = ref["policy"]
@@ -44,7 +43,7 @@ def main(overwrite):
             print('Have not done ' + reform_dir + ', and now doing...')
             
         # Define parameters to use for multiprocessing
-        num_workers = multiprocessing.cpu_count() - 1
+        num_workers = multiprocessing.cpu_count() - 2
         client = Client(n_workers=num_workers, threads_per_worker=1)
         print("Number of workers = ", num_workers)
 
@@ -71,8 +70,11 @@ def main(overwrite):
 
         # Use calibration class to estimate reform tax functions from
         # Tax-Calculator, specifying reform for Tax-Calculator in iit_reform
+        # c2 = Calibration(
+        #     p2, iit_baseline=iit_baseline, iit_reform=iit_reform, estimate_tax_functions=True, data='tmd', client=client
+        # )
         c2 = Calibration(
-            p2, iit_baseline=iit_baseline, iit_reform=iit_reform, estimate_tax_functions=True, data='tmd', client=client
+            p2, iit_reform=iit_reform, estimate_tax_functions=True, data='tmd', client=client
         )
         # update tax function parameters in Specifications Object
         d = c2.get_dict()
