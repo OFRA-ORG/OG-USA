@@ -49,6 +49,7 @@ data/images/*
 data/PSID/psid_lifetime_income.csv
 ogusa/csv_output_files/*
 ogusa/images/*
+ogusa/tmd*
 .vscode/
 *default.profraw
 # examples/**/OUTPUT_BASELINE
