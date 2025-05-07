@@ -30,6 +30,7 @@ htmlcov/*
 *.sublime*
 .DS_Store
 *puf.csv
+*tmd*.csv*
 *tax_func_loop_inputs_large.pkl
 */OUTPUT/*
 envs/
@@ -40,9 +41,12 @@ envs/
 docs/book/_build/*
 docs/build*
 *micro_data_*.pkl
-# examples/TCJA*/**/micro_data_baseline.pkl
-# examples/TCJA*/**/micro_data_policy.pkl
-# examples/TCJA*/**/model_params.pkl
+examples/TCJA*/**/micro_data_baseline.pkl
+examples/TCJA*/**/micro_data_policy.pkl
+examples/TCJA*/**/model_params.pkl
+examples/Example/*
+examples/Example-TMD/*
+examples/Example-CP/*
 cs-config/cs_config/OUTPUT_BASELINE/*
 data/csv_output_files/*
 data/images/*
@@ -52,6 +56,8 @@ ogusa/images/*
 ogusa/tmd*
 .vscode/
 *default.profraw
-# examples/**/OUTPUT_BASELINE
-# examples/**/OUTPUT_REFORM
+examples/**/OUTPUT_BASELINE
+examples/**/OUTPUT_REFORM
 examples/archive/
+*first_stage_reg_results.pkl*
+*hh_id_two_statuses.csv*
